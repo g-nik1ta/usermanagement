@@ -5,6 +5,7 @@
             :style="{ borderBottom: '1px solid #f0f0f0' }"
             v-for="(user, index) in users"
             :key="index"
+            @click="$router.push('/user') "
         >
             <v-list-item-avatar class="ma-0" size="48">
                 <v-avatar size="48" color="rgba(44, 165, 180, 0.4)">
@@ -24,14 +25,14 @@
 
             <v-list-item-content>
                 <v-list-item-subtitle class="text-subtitle-1 font-weight-black black--text">
-                    {{ user.name }} {{ user.surname }}
+                    {{ user.surname }}, {{ user.name }}
                 </v-list-item-subtitle>
                 <v-list-item-title>
                     {{ user.userRole }}
                 </v-list-item-title>
             </v-list-item-content>
 
-            <v-hover v-slot="{ hover }">
+            <v-hover v-slot="{ hover }" class="mr-2">
                 <div>
                     <v-card color="white" class="dots-window" v-if="hover" tile>
                         <v-list dense>
