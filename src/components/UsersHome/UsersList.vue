@@ -3,9 +3,9 @@
         <v-list-item
             class="py-2 pl-6 pr-0"
             :style="{ borderBottom: '1px solid #f0f0f0' }"
-            v-for="(user, index) in users"
+            v-for="(user, index) in $store.getters.getAllUsers"
             :key="index"
-            @click="$router.push('/user') "
+            @click="$router.push({name: 'userInfo', params: { id: user.id } }) "
         >
             <v-list-item-avatar class="ma-0" size="48">
                 <v-avatar size="48" color="rgba(44, 165, 180, 0.4)">
@@ -13,19 +13,19 @@
                         :style="{color: '#2CA5B4'}"
                         class="
                             text-subtitle-1 text-center
-                            font-weight-bold
+                            font-weight-bold text-uppercase
                         "
                     >
-                        {{ AddUserAvatar(user.name, user.surname)}}
+                        {{ AddUserAvatar(user.name, user.surname, user.email)}}
                     </span>
                 </v-avatar>
             </v-list-item-avatar>
 
-            <v-badge class="mx-1" bordered dot inline :color="selectColor(user.isActive)"></v-badge>
+            <v-badge class="mx-1" bordered dot inline :color="user.isActive ? '#2CA5B4' : '#D16A42'"></v-badge>
 
             <v-list-item-content>
                 <v-list-item-subtitle class="text-subtitle-1 font-weight-black black--text">
-                    {{ user.surname }}, {{ user.name }}
+                    {{getFullName(user.name, user.surname, user.email)}}
                 </v-list-item-subtitle>
                 <v-list-item-title>
                     {{ user.userRole }}
@@ -81,56 +81,6 @@
 export default {
     name: "UsersList",
     data: () => ({
-        users: [
-            {
-                name: "Tim",
-                surname: "Adler",
-                userRole: "Card Management",
-                isActive: true,
-            },
-            {
-                name: "Karl",
-                surname: "Bader",
-                userRole: "Card Management",
-                isActive: true,
-            },
-            {
-                name: "Nadja",
-                surname: "Doser",
-                userRole: "Lockingsystem Management",
-                isActive: true,
-            },
-            {
-                name: "Klaus",
-                surname: "Eder",
-                userRole: "Card Manager",
-                isActive: false,
-            },
-            {
-                name: "Hans",
-                surname: "Eller",
-                userRole: "Access Manager",
-                isActive: false,
-            },
-            {
-                name: "Hans",
-                surname: "Eller",
-                userRole: "Access Manager",
-                isActive: true,
-            },
-            {
-                name: "Hans",
-                surname: "Eller",
-                userRole: "Access Manager",
-                isActive: true,
-            },
-            {
-                name: "Hans",
-                surname: "Eller",
-                userRole: "Access Manager",
-                isActive: true,
-            },
-        ],
         userSettingsWindow: [
             {
                 icon: 'mdi-square-edit-outline',
@@ -157,17 +107,18 @@ export default {
                 title: 'Delete user',
                 color: '#B43B2C'
             },
-        ]
+        ],
     }),
     methods: {
-        selectColor(userAcitve) {
-            if (userAcitve) return '#2CA5B4';
-            return '#D16A42';
-        },
-        AddUserAvatar(name, surname) {
+        AddUserAvatar(name, surname, email) {
+            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return (email.split('.')[0][0] + email.split('.')[1][0]);
             return (name[0] + surname[0]);
         },
-    }
+        getFullName(name, surname, email) {
+            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return email;
+            return `${name}, ${surname}`
+        },
+    },
 };
 </script>
 

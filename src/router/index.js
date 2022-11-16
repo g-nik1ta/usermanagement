@@ -10,17 +10,16 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'UsersHome',
         component: UsersLayout,
         children: [
             {
                 path: '',
-                name: 'CreateUser',
+                name: 'createUser',
                 component: CreateUser
             },
             {
-                path: '/user',
-                name: 'UserInfo',
+                path: '/user/:id',
+                name: 'userInfo',
                 component: UserInfo
             }
         ]     

@@ -9,7 +9,7 @@
                                 :style="{ color: '#2CA5B4' }"
                                 class="text-h4 text-center font-weight-bold"
                             >
-                                BK
+                                {{ AddUserAvatar(user.name, user.surname, user.email)}}
                             </span>
                         </v-avatar>
                     </v-list-item-avatar>
@@ -21,18 +21,28 @@
                                 text-subtitle-1
                                 mb-n1
                             "
-                            >Name</v-list-item-subtitle
+                            >  </v-list-item-subtitle
                         >
                         <v-list-item-title class="font-weight-medium text-h6"
-                            >Becker Karl</v-list-item-title
+                            >{{getFullName(user.name, user.surname, user.email)}}</v-list-item-title
                         >
                     </v-list-item-content>
                 </v-list-item-group>
                 <v-list-item-group class="d-flex align-self-start">
-                    <v-list-item-title class="blue-grey lighten-1 font-weight-regular text-subtitle-1 white--text pr-5 rounded-pill"
+                    <v-list-item-title
+                        class="
+                            font-weight-regular
+                            text-subtitle-1
+                            white--text
+                            pr-5
+                            rounded-pill
+                        "
+                        :class="[user.isActive ? 'blue-grey' : 'red', user.isActive ? 'lighten-1' : 'darken-3']"
+                    >
+                        <v-icon color="white" class="pr-1 pl-3" size="20px"
+                            >{{user.isActive ? 'mdi-check' : 'mdi-close'}}</v-icon
                         >
-                        <v-icon color="white" class="pr-1 pl-3" size="20px">mdi-check</v-icon>
-                        Is active</v-list-item-title
+                        {{user.isActive ? 'Is active' : 'Is not active'}}</v-list-item-title
                     >
                     <v-hover v-slot="{ hover }" class="mr-2">
                         <div>
@@ -45,9 +55,7 @@
                                 <v-list dense>
                                     <v-list-item-group color="primary">
                                         <v-list-item
-                                            v-for="(
-                                                item, index
-                                            ) in userSettingsWindow"
+                                            v-for="(item, index) in userSettingsWindow"
                                             :key="index"
                                             :class="
                                                 index >= 3 ? 'mt-3' : 'mt-1'
@@ -92,7 +100,10 @@
                 </v-list-item-group>
             </v-row>
             <v-row class="flex-column my-8">
-                <v-list-item-title class="align-self-start font-weight-bold my-2">Information</v-list-item-title>
+                <v-list-item-title
+                    class="align-self-start font-weight-bold my-2"
+                    >{{user.information}}</v-list-item-title
+                >
                 <v-divider></v-divider>
             </v-row>
             <v-row class="justify-space-between">
@@ -108,11 +119,11 @@
                             >Username</v-list-item-subtitle
                         >
                         <v-list-item-title class="font-weight-medium text-h6"
-                            >KarlB</v-list-item-title
+                            >{{user.userName.split(' ').join('') === '' ? 'username' : user.userName}}</v-list-item-title
                         >
                     </v-list-item-content>
                 </v-list-item-group>
-                
+
                 <v-list-item-group class="d-flex">
                     <v-list-item-content>
                         <v-list-item-subtitle
@@ -125,11 +136,11 @@
                             >Email</v-list-item-subtitle
                         >
                         <v-list-item-title class="font-weight-medium text-h6"
-                            >K.Beckre@Muster.de</v-list-item-title
+                            >{{user.email}}</v-list-item-title
                         >
                     </v-list-item-content>
                 </v-list-item-group>
-                
+
                 <v-list-item-group class="d-flex">
                     <v-list-item-content>
                         <v-list-item-subtitle
@@ -142,7 +153,7 @@
                             >Created on</v-list-item-subtitle
                         >
                         <v-list-item-title class="font-weight-medium text-h6"
-                            >02.01.2022</v-list-item-title
+                            >{{user.userCreater.split(' ')[0]}}</v-list-item-title
                         >
                     </v-list-item-content>
                 </v-list-item-group>
@@ -157,32 +168,51 @@ export default {
     data: () => ({
         userSettingsWindow: [
             {
-                icon: "mdi-square-edit-outline",
-                title: "Edit",
-                color: "#000",
+                icon: 'mdi-square-edit-outline',
+                title: 'Edit',
+                color: '#000'
             },
             {
-                icon: "mdi-account-lock-open-outline",
-                title: "Reset Password",
-                color: "#000",
+                icon: 'mdi-account-lock-open-outline',
+                title: 'Reset Password',
+                color: '#000'
             },
             {
-                icon: "mdi-account-cog-outline",
-                title: "Roles",
-                color: "#000",
+                icon: 'mdi-account-cog-outline',
+                title: 'Roles',
+                color: '#000'
             },
             {
-                icon: "mdi-stop-circle-outline",
-                title: "Disable user",
-                color: "#D16A42",
+                icon: 'mdi-stop-circle-outline',
+                title: 'Disable user',
+                color: '#D16A42'
             },
             {
-                icon: "mdi-trash-can-outline",
-                title: "Delete user",
-                color: "#B43B2C",
+                icon: 'mdi-trash-can-outline',
+                title: 'Delete user',
+                color: '#B43B2C'
             },
         ],
+        user: {},
     }),
+    created() {
+        this.user = this.$store.getters.getAllUsers[this.$route.params.id - 1];
+    },
+    watch: {
+        async '$route'() {
+            this.user = this.$store.getters.getAllUsers[this.$route.params.id - 1];
+        }
+    },
+    methods: {
+        AddUserAvatar(name, surname, email) {
+            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return (email.split('.')[0][0] + email.split('.')[1][0]);
+            return (name[0] + surname[0]);
+        },
+        getFullName(name, surname, email) {
+            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return email;
+            return `${name} ${surname}`
+        },
+    },
 };
 </script>
 
