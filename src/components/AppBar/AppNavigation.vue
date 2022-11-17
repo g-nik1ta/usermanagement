@@ -34,7 +34,7 @@ export default {
     data: () => ({
         items: [
             { icon: "mdi-account-lock-open-outline", url: "/" },
-            { icon: "mdi-lock-open-variant-outline", url: "/roles" },
+            { icon: "mdi-lock-open-variant-outline", url: "/roles-details" },
             { icon: "mdi-lock-pattern", url: "/systems" },
         ],
     }),

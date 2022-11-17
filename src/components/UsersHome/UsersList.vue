@@ -5,7 +5,7 @@
             :style="{ borderBottom: '1px solid #f0f0f0' }"
             v-for="(user, index) in $store.getters.getAllUsers"
             :key="index"
-            @click="$router.push({name: 'userInfo', params: { id: user.id } }) "
+            @click="$router.push({name: 'userContactInfo', params: { id: user.id } }) "
         >
             <v-list-item-avatar class="ma-0" size="48">
                 <v-avatar size="48" color="rgba(44, 165, 180, 0.4)">
@@ -28,7 +28,7 @@
                     {{getFullName(user.name, user.surname, user.email)}}
                 </v-list-item-subtitle>
                 <v-list-item-title>
-                    {{ user.userRole }}
+                    {{ user.userRole[0].name }}
                 </v-list-item-title>
             </v-list-item-content>
 
@@ -36,7 +36,7 @@
                 <div>
                     <v-card color="white" class="dots-window" v-if="hover" tile>
                         <v-list dense>
-                            <v-list-item-group color="primary">
+                            <v-list-item-group>
                                 <v-list-item
                                     v-for="(item, index) in userSettingsWindow"
                                     :key="index"
@@ -78,8 +78,11 @@
 </template>
 
 <script>
+import formattingUserInfo from '@/mixins/formattingUserInfo'
+
 export default {
     name: "UsersList",
+    mixins: [formattingUserInfo],
     data: () => ({
         userSettingsWindow: [
             {
@@ -109,16 +112,6 @@ export default {
             },
         ],
     }),
-    methods: {
-        AddUserAvatar(name, surname, email) {
-            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return (email.split('.')[0][0] + email.split('.')[1][0]);
-            return (name[0] + surname[0]);
-        },
-        getFullName(name, surname, email) {
-            if(name.split(' ').join('') === '' || surname.split(' ').join('') === '') return email;
-            return `${name}, ${surname}`
-        },
-    },
 };
 </script>
 

@@ -1,26 +1,40 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import UsersLayout from '@/layouts/UsersLayout.vue'
-import CreateUser from '@/pages/CreateUser.vue'
-import UserInfo from '@/pages/UserInfo.vue'
+import UsersLayout from '@/layouts/UsersLayout'
+import CreateUser from '@/pages/CreateUser'
+import UserInfo from '@/pages/UserInfo'
+import UserContactInfo from '@/components/UsersHome/UserContactInfo'
+import UserRolesInfo from '@/components/UsersHome/UserRolesInfo'
 
 Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/',
+        path: '',
+        redirect: 'users-list',
         component: UsersLayout,
         children: [
             {
-                path: '',
+                path: 'users-list',
                 name: 'createUser',
                 component: CreateUser
             },
             {
-                path: '/user/:id',
-                name: 'userInfo',
-                component: UserInfo
+                path: 'user_:id',
+                component: UserInfo,
+                children: [
+                    {
+                        path: 'general-info',
+                        name: 'userContactInfo',
+                        component: UserContactInfo
+                    },
+                    {
+                        path: 'roles-info',
+                        name: 'userRolesInfo',
+                        component: UserRolesInfo
+                    },
+                ]
             }
         ]     
     },
