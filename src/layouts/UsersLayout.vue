@@ -6,8 +6,8 @@
 
         <v-row no-gutters>
             <v-col class="pa-0" cols="3">
-                <SearchInput></SearchInput>
-                <UsersList></UsersList>
+                <SearchInput @filterValue='filterUsers'></SearchInput>
+                <UsersList :filterValue="filterValue"></UsersList>
             </v-col>
             <router-view></router-view>
         </v-row>
@@ -20,6 +20,14 @@ import SearchInput from "@/components/UsersHome/SearchInput.vue";
 import UsersList from "@/components/UsersHome/UsersList.vue";
 export default {
     name: "UsersHome",
+    data: () => ({
+        filterValue: ''
+    }),
+    methods: {
+        filterUsers(value) {
+            this.filterValue = value;
+        }
+    },
     components: {
         UsersHeader,
         SearchInput,
