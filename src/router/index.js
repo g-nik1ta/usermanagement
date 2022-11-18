@@ -2,10 +2,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import UsersLayout from '@/layouts/UsersLayout'
-import CreateUser from '@/pages/CreateUser'
-import UserInfo from '@/pages/UserInfo'
-import UserContactInfo from '@/components/UsersHome/UserContactInfo'
-import UserRolesInfo from '@/components/UsersHome/UserRolesInfo'
+import CreateUser from '@/components/UsersHome/CreateUser'
+import UserInfo from '@/components/UsersHome/UserInfo/UserInfo'
+import UserContactInfo from '@/components/UsersHome/UserInfo/UserContactInfo'
+import UserRolesInfo from '@/components/UsersHome/UserInfo/UserRolesInfo'
+
+import UsersFullListLayout from '@/layouts/UsersFullListLayout'
 
 Vue.use(VueRouter)
 
@@ -38,6 +40,11 @@ const routes = [
             }
         ]     
     },
+    {
+        path: '/users-full-list',
+        name: 'usersFullListLayout',
+        component: UsersFullListLayout
+    }
 ]
 
 const router = new VueRouter({

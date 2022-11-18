@@ -50,11 +50,11 @@
                     >
                         {{ userRole.systemsAplications }}
                     </v-list-item-title>
-                    <v-hover v-slot="{ hover }">
+                    <v-hover v-slot="{ hover }" :style="{position: 'relative'}">
                         <div>
                             <v-card
                                 color="white"
-                                class="dots-window py-1"
+                                class="roles-dots-window py-1"
                                 v-if="hover"
                                 tile
                             >
@@ -101,7 +101,7 @@
     </v-card>
 </template>
 
-<script>
+<script> 
 export default {
     name: "UserRolesInfo",
     data: () => ({
@@ -115,15 +115,16 @@ export default {
             this.user =
                 this.$store.getters.getAllUsers[this.$route.params.id - 1];
         },
-    },
+    }, 
 };
 </script>
 
 <style>
-.dots-window {
+.roles-dots-window {
     position: absolute;
-    top: 38px;
+    top: 0;
+    right: 30px;
     z-index: 1;
-    width: 260px;
+    min-width: 260px;
 }
 </style>
