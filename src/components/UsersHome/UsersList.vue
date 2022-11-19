@@ -93,7 +93,7 @@ export default {
 .list {
     overflow: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 200px) !important;
 }
 .list::-webkit-scrollbar {
     width: 0;

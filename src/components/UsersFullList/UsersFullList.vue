@@ -34,7 +34,7 @@
             <v-row
                 no-gutters
                 class="py-2 mb-4 flex-column"
-                v-for="(user, index) in $store.getters.getAllUsers"
+                v-for="(user, index) in filtredUsersList"
                 :key="index"
             >
                 <v-container fluid class="d-flex pa-0 pl-8 pr-4 mb-4">
@@ -131,6 +131,20 @@ import DotsSettings from "@/components/DotsSettings";
 
 export default {
     name: "UsersFullList",
+    props: {
+        filterValue: {
+            type: String,
+            default: "",
+        },
+        filterRolesValue: {
+            type: String,
+            default: "",
+        },
+        rolesFilters: {
+            type: String,
+            default: "",
+        },
+    },
     mixins: [formattingUserInfo],
     data: () => ({
         userSettingsWindow: [
@@ -161,6 +175,34 @@ export default {
             },
         ],
     }),
+    computed: {
+        filtredUsersList() {
+            let usersList = this.$store.getters.getAllUsers;
+            if (this.filterValue) {
+                return usersList.filter((item) => {
+                    return this.filterValue
+                        .toLowerCase()
+                        .split(" ")
+                        .every((v) => 
+                        item.email.toLowerCase().includes(v) ||
+                        item.name.toLowerCase().includes(v) || 
+                        item.surname.toLowerCase().includes(v)
+                        );
+                });
+            } else 
+            if( this.filterRolesValue) {
+                return usersList.filter((item) => {
+                    let flag = false;
+                    for(let i = 0; i < item.userRole.length; i++) {
+                        if(this.filterRolesValue.includes(item.userRole[i].name)) flag = true;
+                    }
+                    return flag
+                });
+            } else {
+                return usersList;
+            }
+        },
+    },
     components: {
         DotsSettings,
     }

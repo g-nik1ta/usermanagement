@@ -5,8 +5,15 @@
         <v-divider></v-divider>
 
         <v-card class="pt-6 mr-10">
-            <UsersFilter></UsersFilter>
-            <UsersFullList></UsersFullList>            
+            <UsersFilter
+                @filterValue="filterUsers"
+                @filterRolesValue="filterRolesUsers"
+            ></UsersFilter>
+            <UsersFullList
+                :filterValue="filterValue"
+                :filterRolesValue="filterRolesValue"
+                :rolesFilters="rolesFilters"
+            ></UsersFullList>
         </v-card>
     </v-container>
 </template>
@@ -15,8 +22,24 @@
 import UsersHeader from "@/components/UsersHome/UsersHeader";
 import UsersFilter from "@/components/UsersFullList/UsersFilter";
 import UsersFullList from "@/components/UsersFullList/UsersFullList";
+
 export default {
     name: "UsersFullListLayout",
+    data: () => ({
+        filterValue: "",
+        filterRolesValue: "",
+        rolesFilters: "",
+    }),
+    methods: {
+        filterUsers(value) {
+            this.filterValue = value;
+        },
+        filterRolesUsers(value, rolesFilters) {
+            this.filterRolesValue = value.join("");
+            this.rolesFilters = rolesFilters.join("").split(" ").join("");
+            console.log(this.filterRolesValue);
+        },
+    },
     components: {
         UsersHeader,
         UsersFilter,

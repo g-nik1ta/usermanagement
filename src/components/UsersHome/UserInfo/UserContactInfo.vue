@@ -87,7 +87,9 @@
                             :class="item.subtitleSize"
                             >{{ item.subtitleText }}</v-list-item-subtitle
                         >
-                        <v-list-item-title class="font-weight-medium text-h6">{{item.method(getUserInfo(item.titleText))}}</v-list-item-title>
+                        <v-list-item-title class="font-weight-medium text-h6">
+                            {{item.method(user[item.titleText])}}
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item-group>
             </v-col>
@@ -140,8 +142,8 @@ export default {
                 subtitleSize: "text-subtitle-1",
                 subtitleText: "Username",
                 titleText: "userName",
-                method(val) {
-                    return val.split(" ").join("") === "" ? "username" : val
+                method(value) {
+                    return value.split(" ").join("") === "" ? "username" : value
                 }
             },
             {
@@ -149,8 +151,8 @@ export default {
                 subtitleSize: "text-subtitle-1",
                 subtitleText: "Email",
                 titleText: "email",
-                method(val) {
-                    return val
+                method(value) {
+                    return value
                 }
             },
             {
@@ -158,8 +160,8 @@ export default {
                 subtitleSize: "text-subtitle-2",
                 subtitleText: "Created on",
                 titleText: "userCreater",
-                method(val) {
-                    return val.split(" ")[0]
+                method(value) {
+                    return value.split(" ")[0]
                 }
             },
         ],
