@@ -51,6 +51,10 @@ const routes = [
         path: '/create-user',
         name: 'createUserLayout',
         component: CreateUserLayout
+    },
+    {
+        path: '/usermanagement',
+        redirect: '/'
     }
 ]
 
