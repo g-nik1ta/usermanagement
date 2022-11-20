@@ -11,7 +11,7 @@
                             >
                                 {{
                                     AddUserAvatar(
-                                        user.name,
+                                        user.firstname,
                                         user.surname,
                                         user.email
                                     )
@@ -31,7 +31,7 @@
                         >
                         <v-list-item-title class="font-weight-medium text-h6">{{
                             getFullName(
-                                user.name,
+                                user.firstname,
                                 user.surname,
                                 user.email
                             ).replace(/,/g, "")
@@ -141,7 +141,7 @@ export default {
                 colsN: 4,
                 subtitleSize: "text-subtitle-1",
                 subtitleText: "Username",
-                titleText: "userName",
+                titleText: "username",
                 method(value) {
                     return value.split(" ").join("") === "" ? "username" : value
                 }

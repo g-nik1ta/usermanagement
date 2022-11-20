@@ -2,12 +2,14 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import UsersLayout from '@/layouts/UsersLayout'
-import CreateUser from '@/components/UsersHome/CreateUser'
+import StartPages from '@/components/UsersHome/StartPages'
 import UserInfo from '@/components/UsersHome/UserInfo/UserInfo'
 import UserContactInfo from '@/components/UsersHome/UserInfo/UserContactInfo'
 import UserRolesInfo from '@/components/UsersHome/UserInfo/UserRolesInfo'
 
 import UsersFullListLayout from '@/layouts/UsersFullListLayout'
+
+import CreateUserLayout from '@/layouts/CreateUserLayout'
 
 Vue.use(VueRouter)
 
@@ -19,8 +21,8 @@ const routes = [
         children: [
             {
                 path: 'users-list',
-                name: 'createUser',
-                component: CreateUser
+                name: 'startPages',
+                component: StartPages
             },
             {
                 path: 'user_:id',
@@ -44,6 +46,11 @@ const routes = [
         path: '/users-full-list',
         name: 'usersFullListLayout',
         component: UsersFullListLayout
+    },
+    {
+        path: '/create-user',
+        name: 'createUserLayout',
+        component: CreateUserLayout
     }
 ]
 

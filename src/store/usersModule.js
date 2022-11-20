@@ -3,7 +3,7 @@ export default {
         users: [
             {
                 id: 1,
-                name: "Tim",
+                firstname: "Tim",
                 surname: "Adler",
                 userRole: [
                     {id: 1, name: "Card Management", systemsAplications: ".CARD"},
@@ -12,12 +12,12 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'Tim.Adler@Musterag.de',
-                userName: 'AdlerT',
+                username: 'AdlerT',
                 userCreater: '19.07.2022 16:20',
             },
             {
                 id: 2,
-                name: "Karl",
+                firstname: "Karl",
                 surname: "Bader",
                 userRole: [
                     {id: 1, name: "EXTERNAL Manager", systemsAplications: ".EXTERNAL"},
@@ -28,12 +28,12 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'Karl.Bader@Mustermann.de',
-                userName: 'KarlB',
+                username: 'KarlB',
                 userCreater: '19.07.2022 16:17',
             },
             {
                 id: 3,
-                name: "Nadja",
+                firstname: "Nadja",
                 surname: "Doser",
                 userRole: [
                     {id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT"},
@@ -42,12 +42,12 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'Nadja.Diser@Mueller.de',
-                userName: 'NadjaD',
+                username: 'NadjaD',
                 userCreater: '19.07.2022 16:22',
             },
             {
                 id: 4,
-                name: "Klaus",
+                firstname: "Klaus",
                 surname: "Eder",
                 userRole: [
                     {id: 1, name: "Card Manager", systemsAplications: ".CARD"},
@@ -55,12 +55,12 @@ export default {
                 isActive: false,
                 information: 'Information',
                 email: 'Klaus.Eder@company1.de',
-                userName: 'KlausE',
+                username: 'KlausE',
                 userCreater: '19.07.2022 16:28',
             },
             {
                 id: 5,
-                name: "Hans",
+                firstname: "Hans",
                 surname: "Eller",
                 userRole: [
                     {id: 1, name: "Access Manager", systemsAplications: ".ACCESS"},
@@ -70,12 +70,12 @@ export default {
                 isActive: false,
                 information: 'Information',
                 email: 'Hans.Eller@muster.de',
-                userName: 'HansE',
+                username: 'HansE',
                 userCreater: '21.07.2022 14:48',
             },
             {
                 id: 6,
-                name: '',
+                firstname: '',
                 surname: '',
                 userRole: [
                     {id: 1, name: "Card Management", systemsAplications: ".CARD"},
@@ -84,12 +84,12 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'a.goeller@gis-GmbH.de',
-                userName: '',
+                username: '',
                 userCreater: '21.07.2022 19:04',
             },
             {
                 id: 7,
-                name: "Tom",
+                firstname: "Tom",
                 surname: "Holland",
                 userRole: [
                     {id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT"},
@@ -98,12 +98,12 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'Tom.Holland@Muster.de',
-                userName: 'TomH',
+                username: 'TomH',
                 userCreater: '02.08.2022 10:36',
             },
             {
                 id: 8,
-                name: "Aleks",
+                firstname: "Aleks",
                 surname: "Olson",
                 userRole: [
                     {id: 1, name: "Access Manager", systemsAplications: ".ACCESS"},
@@ -112,12 +112,16 @@ export default {
                 isActive: true,
                 information: 'Information',
                 email: 'Aleks.Olson@Muster.de',
-                userName: 'AleksO',
+                username: 'AleksO',
                 userCreater: '03.08.2022 13:14',
             },
         ],
     },
-    mutations: {},
+    mutations: {
+        addUser(state, payload) {
+            state.users.push(payload)
+        }
+    },
     getters: {
         getAllUsers(state) {
             return state.users;

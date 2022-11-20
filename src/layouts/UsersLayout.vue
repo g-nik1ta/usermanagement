@@ -1,5 +1,5 @@
 <template>
-    <v-container class="pa-0 ma-0" fluid>
+    <v-container class="pa-0" fluid>
         <UsersHeader></UsersHeader>
 
         <v-divider></v-divider>

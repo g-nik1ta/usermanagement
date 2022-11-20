@@ -73,7 +73,12 @@
                         <v-list>
                             <v-list-item>
                                 <v-list-item-action>
-                                    <v-btn depressed plain small>
+                                    <v-btn 
+                                        depressed 
+                                        plain 
+                                        small
+                                        @click="$router.push({name: 'createUserLayout'})"
+                                    >
                                         <v-icon> mdi-logout </v-icon>
                                         <span class="pl-7 font-weight-medium"
                                             >log out</span

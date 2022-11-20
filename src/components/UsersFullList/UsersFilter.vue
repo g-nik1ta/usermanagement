@@ -86,7 +86,7 @@
             class="arrow-btn"
             width="40px"
             height="40px"
-            @click="$router.push({ name: 'createUser' })"
+            @click="$router.push({ name: 'startPages' })"
             fab
         >
             <v-icon class="text-h4">mdi-chevron-left</v-icon>

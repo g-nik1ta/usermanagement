@@ -22,7 +22,7 @@
                             text-uppercase
                         "
                     >
-                        {{ AddUserAvatar(user.name, user.surname, user.email) }}
+                        {{ AddUserAvatar(user.firstname, user.surname, user.email) }}
                     </span>
                 </v-avatar>
             </v-list-item-avatar>
@@ -39,7 +39,7 @@
                 <v-list-item-subtitle
                     class="text-subtitle-1 font-weight-black black--text"
                 >
-                    {{ getFullName(user.name, user.surname, user.email) }}
+                    {{ getFullName(user.firstname, user.surname, user.email) }}
                 </v-list-item-subtitle>
                 <v-list-item-title>
                     {{ user.userRole[0].name }}
@@ -73,7 +73,7 @@ export default {
                         .split(" ")
                         .every((v) => 
                         item.email.toLowerCase().includes(v) ||
-                        item.name.toLowerCase().includes(v) || 
+                        item.firstname.toLowerCase().includes(v) || 
                         item.surname.toLowerCase().includes(v) || 
                         item.userRole[0].name.toLowerCase().split(" ").join("").includes(v)
                         );
