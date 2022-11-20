@@ -30,7 +30,7 @@
                 >
             </v-col>
         </v-row>
-        <v-container class="list pa-0" fluid>
+        <v-container class="full-list pa-0" fluid>
             <v-row
                 no-gutters
                 class="py-2 mb-4 flex-column"
@@ -223,9 +223,12 @@ export default {
     height: 16px !important;
     border-radius: 8px !important;
 }
-.list {
+.full-list {
     overflow: scroll;
     overflow-x: hidden;
-    height: calc(100vh - 240px);
+    height: calc(100vh - 295px);
+}
+.full-list::-webkit-scrollbar {
+    width: 0;
 }
 </style>
