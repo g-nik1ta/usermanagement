@@ -6,8 +6,8 @@ export default {
                 firstname: "Tim",
                 surname: "Adler",
                 userRole: [
-                    {id: 1, name: "Card Management", systemsAplications: ".CARD"},
-                    {id: 2, name: "DIM Management", systemsAplications: "#Identity"},
+                    { id: 1, name: "Card Management", systemsAplications: ".CARD" },
+                    { id: 2, name: "DIM Management", systemsAplications: "#Identity" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -20,10 +20,10 @@ export default {
                 firstname: "Karl",
                 surname: "Bader",
                 userRole: [
-                    {id: 1, name: "EXTERNAL Manager", systemsAplications: ".EXTERNAL"},
-                    {id: 2, name: "Lockingsystem Management", systemsAplications: ".VISIT"},
-                    {id: 3, name: "Card Management", systemsAplications: ".CARD"},
-                    {id: 4, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement"},
+                    { id: 1, name: "EXTERNAL Manager", systemsAplications: ".EXTERNAL" },
+                    { id: 2, name: "Lockingsystem Management", systemsAplications: ".VISIT" },
+                    { id: 3, name: "Card Management", systemsAplications: ".CARD" },
+                    { id: 4, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -36,8 +36,8 @@ export default {
                 firstname: "Nadja",
                 surname: "Doser",
                 userRole: [
-                    {id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT"},
-                    {id: 2, name: "Visitor Management", systemsAplications: ".VISIT"},
+                    { id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT" },
+                    { id: 2, name: "Visitor Management", systemsAplications: ".VISIT" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -50,7 +50,7 @@ export default {
                 firstname: "Klaus",
                 surname: "Eder",
                 userRole: [
-                    {id: 1, name: "Card Manager", systemsAplications: ".CARD"},
+                    { id: 1, name: "Card Manager", systemsAplications: ".CARD" },
                 ],
                 isActive: false,
                 information: 'Information',
@@ -63,9 +63,9 @@ export default {
                 firstname: "Hans",
                 surname: "Eller",
                 userRole: [
-                    {id: 1, name: "Access Manager", systemsAplications: ".ACCESS"},
-                    {id: 2, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement"},
-                    {id: 3, name: "EXTERNAL Manager", systemsAplications: ".EXTERNAL"}, 
+                    { id: 1, name: "Access Manager", systemsAplications: ".ACCESS" },
+                    { id: 2, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement" },
+                    { id: 3, name: "EXTERNAL Manager", systemsAplications: ".EXTERNAL" },
                 ],
                 isActive: false,
                 information: 'Information',
@@ -78,8 +78,8 @@ export default {
                 firstname: '',
                 surname: '',
                 userRole: [
-                    {id: 1, name: "Card Management", systemsAplications: ".CARD"},
-                    {id: 2, name: "DIM Management", systemsAplications: "#Identity"},
+                    { id: 1, name: "Card Management", systemsAplications: ".CARD" },
+                    { id: 2, name: "DIM Management", systemsAplications: "#Identity" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -92,8 +92,8 @@ export default {
                 firstname: "Tom",
                 surname: "Holland",
                 userRole: [
-                    {id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT"},
-                    {id: 2, name: "Visitor Management", systemsAplications: ".VISIT"},
+                    { id: 1, name: "Lockingsystem Management", systemsAplications: ".VISIT" },
+                    { id: 2, name: "Visitor Management", systemsAplications: ".VISIT" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -106,8 +106,8 @@ export default {
                 firstname: "Aleks",
                 surname: "Olson",
                 userRole: [
-                    {id: 1, name: "Access Manager", systemsAplications: ".ACCESS"},
-                    {id: 2, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement"},
+                    { id: 1, name: "Access Manager", systemsAplications: ".ACCESS" },
+                    { id: 2, name: "DIM Management", systemsAplications: "#DigitalIdentitymanagement" },
                 ],
                 isActive: true,
                 information: 'Information',
@@ -115,6 +115,52 @@ export default {
                 username: 'AleksO',
                 userCreater: '03.08.2022 13:14',
             },
+        ],
+        roles: [
+            {
+                id: 11,
+                name: ".ACCESS",
+                children: [{ id: 1101, name: "Access Manager" }],
+            },
+            {
+                id: 12,
+                name: ".CARD",
+                children: [{ id: 1201, name: "Card Management" }],
+            },
+            { id: 13, name: ".CERTIFY" },
+            {
+                id: 14,
+                name: ".EXTERNAL",
+                children: [
+                    { id: 1401, name: "Default-User" },
+                    { id: 1402, name: "Onboarding Manager" },
+                    { id: 1403, name: "Extrenal Employee Management" },
+                ],
+            },
+            { id: 15, name: ".FM" },
+            { id: 16, name: ".OM" },
+            {
+                id: 17,
+                name: ".VISIT",
+                children: [
+                    { id: 1701, name: "Visitor Management" },
+                    { id: 1702, name: "Facillity-Management" },
+                    { id: 1703, name: "Host of Visitors" },
+                    { id: 1704, name: "Receptionist" },
+                    { id: 1705, name: "Preregister ViSIT" },
+                ],
+            },
+            { id: 18, name: "#Checklisten Management" },
+            {
+                id: 19,
+                name: "#DigitalIdentityManament",
+                children: [{ id: 1901, name: "DIM-Management" }],
+            },
+            { id: 20, name: "#Employee Network" },
+            { id: 21, name: "#FotoApp" },
+            { id: 22, name: "#Onboarding" },
+            { id: 23, name: "#Rooms & Resources" },
+            { id: 24, name: "#UserIndentity" },
         ],
     },
     mutations: {
@@ -125,6 +171,9 @@ export default {
     getters: {
         getAllUsers(state) {
             return state.users;
+        },
+        getAllRoles(state) {
+            return state.roles;
         },
     },
     actions: {}

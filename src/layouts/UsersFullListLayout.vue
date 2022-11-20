@@ -37,7 +37,6 @@ export default {
         filterRolesUsers(value, rolesFilters) {
             this.filterRolesValue = value.join("");
             this.rolesFilters = rolesFilters.join("").split(" ").join("");
-            console.log(this.filterRolesValue);
         },
     },
     components: {

@@ -266,52 +266,7 @@ export default {
     data: () => ({
         btnFlag: true,
         selection: [],
-        rolesItems: [
-            {
-                id: 11,
-                name: ".ACCESS",
-                children: [{ id: 1101, name: "Access Manager" }],
-            },
-            {
-                id: 12,
-                name: ".CARD",
-                children: [{ id: 1201, name: "Card Management" }],
-            },
-            { id: 13, name: ".CERTIFY" },
-            {
-                id: 14,
-                name: ".EXTERNAL",
-                children: [
-                    { id: 1401, name: "Default-User" },
-                    { id: 1402, name: "Onboarding Manager" },
-                    { id: 1403, name: "Extrenal Employee Management" },
-                ],
-            },
-            { id: 15, name: ".FM" },
-            { id: 16, name: ".OM" },
-            {
-                id: 17,
-                name: ".VISIT",
-                children: [
-                    { id: 1701, name: "Visitor Management" },
-                    { id: 1702, name: "Facillity-Management" },
-                    { id: 1703, name: "Host of Visitors" },
-                    { id: 1704, name: "Receptionist" },
-                    { id: 1705, name: "Preregister ViSIT" },
-                ],
-            },
-            { id: 18, name: "#Checklisten Management" },
-            {
-                id: 19,
-                name: "#DigitalIdentityManament",
-                children: [{ id: 1901, name: "DIM-Management" }],
-            },
-            { id: 20, name: "#Employee Network" },
-            { id: 21, name: "#FotoApp" },
-            { id: 22, name: "#Onboarding" },
-            { id: 23, name: "#Rooms & Resources" },
-            { id: 24, name: "#UserIndentity" },
-        ],
+        rolesItems: [],
         realmItems: ["Realm 1", "Realm 2", "Realm 3", "Realm 4"],
         form: {
             id: '',
@@ -330,6 +285,9 @@ export default {
             information: 'Info'
         },
     }),
+    created() {
+        this.rolesItems = this.$store.getters.getAllRoles;
+    },
     validations: {
         form: {
             email: { required, email },

@@ -139,6 +139,10 @@ export default {
             this.$emit('filterRolesValue', this.searchroles, this.rolesFilters)
         },
         getSlotName(e) {
+            this.search = '';
+            this.searchroles = [];
+            this.searchOnChange();
+            this.searchRolesOnChange();
             this.slotName = e.split(" ").join("").toLowerCase();
         },
     },

@@ -51,7 +51,7 @@
                                 >
                                     {{
                                         AddUserAvatar(
-                                            user.name,
+                                            user.firstname,
                                             user.surname,
                                             user.email
                                         )
@@ -71,7 +71,7 @@
                             <v-list-item-title class="text-h6 font-weight-bold">
                                 {{
                                     getFullName(
-                                        user.name,
+                                        user.firstname,
                                         user.surname,
                                         user.email
                                     )
@@ -185,7 +185,7 @@ export default {
                         .split(" ")
                         .every((v) => 
                         item.email.toLowerCase().includes(v) ||
-                        item.name.toLowerCase().includes(v) || 
+                        item.firstname.toLowerCase().includes(v) || 
                         item.surname.toLowerCase().includes(v)
                         );
                 });
