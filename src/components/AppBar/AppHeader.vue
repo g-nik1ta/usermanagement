@@ -73,11 +73,11 @@
                         <v-list>
                             <v-list-item>
                                 <v-list-item-action>
-                                    <v-btn 
-                                        depressed 
-                                        plain 
+                                    <v-btn
+                                        depressed
+                                        plain
                                         small
-                                        @click="$router.push({name: 'createUserLayout'})"
+                                        @click="logOut()"
                                     >
                                         <v-icon> mdi-logout </v-icon>
                                         <span class="pl-7 font-weight-medium"
@@ -95,11 +95,24 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
     name: "AppHeader",
     data: () => ({
         menu: false,
-    })
+    }),
+    methods: {
+        logOut() {
+            let logoutOptions = { redirectUri: "http://localhost:8080/" };
+            Vue.$keycloak.logout(logoutOptions).then((success) => {
+                    console.log("--> log: logout success ", success);
+                })
+                .catch((error) => {
+                    console.log("--> log: logout error ", error);
+                });
+        },
+    },
 };
 </script>
 
