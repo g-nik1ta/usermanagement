@@ -18,7 +18,7 @@ Vue.$keycloak.init({ onLoad: 'login-required' }).then((auth) => {
             store,
             render: h => h(App)
         }).$mount('#app')
-        console.log(Vue.$keycloak.tokenParsed.preferred_username)
+        // console.log(Vue.$keycloak.tokenParsed.preferred_username)
         
         // console.log('Данные пользователя: ', Vue.$keycloak.tokenParsed)
         // console.log('Token is: ', Vue.$keycloak.token);

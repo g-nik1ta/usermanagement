@@ -33,8 +33,8 @@
                             class="mr-3"
                             elevation="1"
                         >
-                            <span class="teal--text text-h6 font-weight-medium"
-                                >JH</span
+                            <span class="teal--text text-h6 font-weight-medium">
+                                {{ AddUserAvatar(user.firstName, user.lastName, user.email) }}</span
                             >
                         </v-btn>
                     </template>
@@ -50,7 +50,7 @@
                                                 text-h5 text-center
                                                 font-weight-regular
                                             "
-                                            >JH</span
+                                            >{{AddUserAvatar(user.firstName, user.lastName, user.email)}}</span
                                         >
                                     </v-avatar>
                                 </v-list-item-avatar>
@@ -58,11 +58,11 @@
                                 <v-list-item-content>
                                     <v-list-item-title
                                         class="font-weight-medium"
-                                        >Haller, Jan</v-list-item-title
+                                        >{{getFullName(user.lastName, user.firstName, user.email)}}</v-list-item-title
                                     >
                                     <v-list-item-subtitle
                                         class="font-weight-regular"
-                                        >Haller.jan@masterag.de</v-list-item-subtitle
+                                        >{{user.email}}</v-list-item-subtitle
                                     >
                                 </v-list-item-content>
                             </v-list-item>
@@ -95,17 +95,36 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
+import axios from "axios";
+import formattingUserInfo from "@/mixins/formattingUserInfo";
 
 export default {
     name: "AppHeader",
+    mixins: [formattingUserInfo],
     data: () => ({
         menu: false,
+        user: {
+            firstName: "",
+            lastName: "",
+            email: "",
+        },
     }),
+    beforeCreate() {
+        axios
+            .get("http://rdp.nks.com.ua:55002/api/users/current-user")
+            .then((response) => {
+                this.user.firstName = response.data.firstName;
+                this.user.lastName = response.data.lastName;
+                this.user.email = response.data.email;
+            });
+    },
     methods: {
         logOut() {
             let logoutOptions = { redirectUri: "http://localhost:8080/" };
-            Vue.$keycloak.logout(logoutOptions).then((success) => {
+            Vue.$keycloak
+                .logout(logoutOptions)
+                .then((success) => {
                     console.log("--> log: logout success ", success);
                 })
                 .catch((error) => {

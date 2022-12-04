@@ -7,12 +7,16 @@
                         <v-avatar size="86" color="rgba(44, 165, 180, 0.4)">
                             <span
                                 :style="{ color: '#2CA5B4' }"
-                                class="text-h4 text-center font-weight-bold text-uppercase"
+                                class="
+                                    text-h4 text-center
+                                    font-weight-bold
+                                    text-uppercase
+                                "
                             >
                                 {{
                                     AddUserAvatar(
-                                        user.firstname,
-                                        user.surname,
+                                        user.firstName,
+                                        user.lastName,
                                         user.email
                                     )
                                 }}
@@ -29,13 +33,15 @@
                             "
                             >Name</v-list-item-subtitle
                         >
-                        <v-list-item-title class="font-weight-medium text-h6">{{
-                            getFullName(
-                                user.firstname,
-                                user.surname,
-                                user.email
-                            ).replace(/,/g, "")
-                        }}</v-list-item-title>
+                        <v-list-item-title class="font-weight-medium text-h6">
+                            {{
+                                getFullName(
+                                    user.firstName,
+                                    user.lastName,
+                                    user.email
+                                ).replace(/,/g, "")
+                            }}
+                        </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item-group>
             </v-col>
@@ -50,15 +56,15 @@
                             rounded-pill
                         "
                         :class="[
-                            user.isActive ? 'blue-grey' : 'red',
-                            user.isActive ? 'lighten-1' : 'darken-3',
+                            user.enabled ? 'blue-grey' : 'red',
+                            user.enabled ? 'lighten-1' : 'darken-3',
                         ]"
                     >
                         <v-icon color="white" class="pr-1 pl-3" size="20px">{{
-                            user.isActive ? "mdi-check" : "mdi-close"
+                            user.enabled ? "mdi-check" : "mdi-close"
                         }}</v-icon>
                         {{
-                            user.isActive ? "Is active" : "Is not active"
+                            user.enabled ? "Is active" : "Is not active"
                         }}</v-list-item-title
                     >
                     <DotsSettings></DotsSettings>
@@ -66,12 +72,11 @@
             </v-col>
         </v-row>
         <v-row class="flex-column my-8">
-            <v-list-item-title class="align-self-start font-weight-bold my-2">{{
-                user.information
-            }}</v-list-item-title>
+            <v-list-item-title class="align-self-start font-weight-bold my-2">
+                {{user.information === null ? 'null' : user.information}}
+            </v-list-item-title>
             <v-divider></v-divider>
         </v-row>
-
 
         <v-row class="mt-0">
             <v-col
@@ -88,7 +93,7 @@
                             >{{ item.subtitleText }}</v-list-item-subtitle
                         >
                         <v-list-item-title class="font-weight-medium text-h6">
-                            {{item.method(user[item.titleText])}}
+                            {{ item.method(user[item.titleText]) }}
                         </v-list-item-title>
                     </v-list-item-content>
                 </v-list-item-group>
@@ -104,8 +109,18 @@ import DotsSettings from "@/components/DotsSettings";
 export default {
     name: "UserContactInfo",
     mixins: [formattingUserInfo],
-    created() {
-        this.user = this.$store.getters.getAllUsers[this.$route.params.id - 1];
+
+    beforeCreate() {
+        setTimeout(() => {
+            const allUser = this.$store.getters.getAllUsers;
+
+            for (let i = 0; i < allUser.length; i++) {
+                if (allUser[i].id == this.$route.params.id) {
+                    this.user = allUser[i];
+                    break;
+                }
+            }
+        }, 700);
     },
     data: () => ({
         userSettingsWindow: [
@@ -135,16 +150,27 @@ export default {
                 color: "#B43B2C",
             },
         ],
-        user: {},
+        user: {
+            createdOn: '',
+            email: '',
+            enabled: '',
+            firstName: '',
+            id: '',
+            lastName: '',
+            userName: '',
+        },
         userMainInfo: [
             {
                 colsN: 4,
                 subtitleSize: "text-subtitle-1",
                 subtitleText: "Username",
-                titleText: "username",
+                titleText: "userName",
                 method(value) {
-                    return value.split(" ").join("") === "" ? "username" : value
-                }
+                    return value
+                    // return value.split(" ").join("") === ""
+                    //     ? "username"
+                    //     : value;
+                },
             },
             {
                 colsN: 5,
@@ -152,34 +178,34 @@ export default {
                 subtitleText: "Email",
                 titleText: "email",
                 method(value) {
-                    return value
-                }
+                    return value;
+                },
             },
             {
                 colsN: 3,
                 subtitleSize: "text-subtitle-2",
                 subtitleText: "Created on",
-                titleText: "userCreater",
+                titleText: "createdOn",
                 method(value) {
-                    return value.split(" ")[0]
-                }
+                    return value.split("T")[0];
+                },
             },
         ],
     }),
-    methods: {
-        getUserInfo(value) {
-            return this.$store.getters.getAllUsers[this.$route.params.id - 1][value]
-        }
-    },
     watch: {
         async $route() {
-            this.user =
-                this.$store.getters.getAllUsers[this.$route.params.id - 1];
+            const allUser = this.$store.getters.getAllUsers;
+            for (let i = 0; i < allUser.length; i++) {
+                if (allUser[i].id == this.$route.params.id) {
+                    this.user = allUser[i];
+                    break;
+                }
+            }
         },
     },
     components: {
         DotsSettings,
-    }
+    },
 };
 </script>
 

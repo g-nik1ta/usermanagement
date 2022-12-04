@@ -17,12 +17,12 @@ const AUTHORIZATION_HEADER = "Authorization";
 
 export default Vue.extend({
     name: "App",
-    created: function () {
+    beforeCreate: function () {
         axios.interceptors.request.use(async (config) => {
             // Обновляем токен
             const token = await updateToken();
             // Добавляем токен в каждый запрос
-            config.headers.common[AUTHORIZATION_HEADER] = `Bearer ${token}`;
+            config.headers[AUTHORIZATION_HEADER] = `Bearer ${token}`;
             return config;
         });
         axios.interceptors.response.use(
@@ -37,6 +37,7 @@ export default Vue.extend({
                 });
             }
         );
+        this.$store.dispatch("getUsers");
     },
     watch: {
         $route() {

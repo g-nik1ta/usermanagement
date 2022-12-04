@@ -50,17 +50,17 @@
                 <v-row no-gutters>
                     <v-col cols="6">
                         <v-text-field
-                            v-model="form.surname"
+                            v-model="form.lastName"
                             type="text"
                             outlined
                             dense
                             class="pr-7"
-                            label="Surname"
+                            label="LastName"
                         ></v-text-field>
                     </v-col>
                     <v-col cols="6">
                         <v-text-field
-                            v-model="form.firstname"
+                            v-model="form.firstName"
                             type="text"
                             outlined
                             dense
@@ -72,7 +72,7 @@
                 <v-row no-gutters>
                     <v-col cols="6">
                         <v-text-field
-                            v-model="form.username"
+                            v-model="form.userName"
                             type="text"
                             outlined
                             dense
@@ -270,9 +270,9 @@ export default {
         realmItems: ["Realm 1", "Realm 2", "Realm 3", "Realm 4"],
         form: {
             id: '',
-            surname: "",
-            firstname: "",
-            username: "",
+            lastName: "",
+            firstName: "",
+            userName: "",
             email: "",
             select: null,
             password: "",
@@ -280,8 +280,8 @@ export default {
             checkbox: false,
             userRole: [],
 
-            isActive: false,
-            userCreater: "??? ?",
+            enabled: false,
+            createdOn: "??? ?",
             information: 'Info'
         },
     }),
@@ -401,9 +401,9 @@ export default {
         },
         clear() {
             this.$v.form.$reset();
-            this.form.surname = "";
-            this.form.firstname = "";
-            this.form.username = "";
+            this.form.lastName = "";
+            this.form.firstName = "";
+            this.form.userName = "";
             this.form.email = "";
             this.form.select = null;
             this.form.password = "";

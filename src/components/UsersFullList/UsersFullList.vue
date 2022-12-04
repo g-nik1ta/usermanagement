@@ -8,13 +8,13 @@
             <v-col cols="1"></v-col>
             <v-col cols="2">
                 <v-list-item-title
-                    class="d-flex ml-n3"
+                    class="d-flex ml-n1"
                     >Name</v-list-item-title
                 >
             </v-col>
             <v-col cols="2">
                 <v-list-item-title
-                    class="d-flex ml-3"
+                    class="d-flex ml-4"
                     >Email</v-list-item-title
                 >
             </v-col>
@@ -25,7 +25,7 @@
                 >
             </v-col>
             <v-col cols="2">
-                <v-list-item-title class="d-flex ml-15"
+                <v-list-item-title class="d-flex ml-5"
                     >Created at</v-list-item-title
                 >
             </v-col>
@@ -34,7 +34,7 @@
             <v-row
                 no-gutters
                 class="py-2 mb-4 flex-column"
-                v-for="(user, index) in filtredUsersList"
+                v-for="(user, index) in filtredUsersList()"
                 :key="index"
             >
                 <v-container fluid class="d-flex pa-0 pl-8 pr-4 mb-4">
@@ -51,8 +51,8 @@
                                 >
                                     {{
                                         AddUserAvatar(
-                                            user.firstname,
-                                            user.surname,
+                                            user.firstName,
+                                            user.lastName,
                                             user.email
                                         )
                                     }}
@@ -63,16 +63,16 @@
                             class="ml-3 user-active-full-list"
                             bordered
                             dot
-                            :color="user.isActive ? '#2CA5B4' : '#D16A42'"
+                            :color="user.enabled ? '#2CA5B4' : '#D16A42'"
                         ></v-badge>
                     </v-col>
-                    <v-col cols="2" class="pa-0 ml-n3" align-self="center">
+                    <v-col cols="2" class="pa-0 ml-n1" align-self="center">
                         <v-list-item-content class="py-0">
                             <v-list-item-title class="text-h6 font-weight-bold">
                                 {{
                                     getFullName(
-                                        user.firstname,
-                                        user.surname,
+                                        user.firstName,
+                                        user.lastName,
                                         user.email
                                     )
                                 }}
@@ -91,7 +91,11 @@
                     <v-col cols="5" class="pa-0 pl-12" align-self="center">
                         <v-list-item-content class="flex-nowrap py-0">
                             <v-list-item-title
-                                v-for="role in user.userRole.length > 2
+                                v-for="role in user.userRole === undefined
+                                ? plugRoles
+                                : user.userRole[0].name === null
+                                ? plugRoles
+                                : user.userRole.length > 2
                                     ? [user.userRole[0], user.userRole[1]]
                                     : user.userRole"
                                 :key="role.id"
@@ -100,7 +104,8 @@
                                 {{ role.name }}
                             </v-list-item-title>
                             <v-list-item-title
-                                v-if="user.userRole.length > 2"
+                                v-if="user.userRole === undefined ? 
+                                plugRoles.length > 2 : user.userRole.length > 2"
                                 class="
                                     font-weight-black
                                     roles-block
@@ -108,13 +113,14 @@
                                     rounded-circle
                                 "
                             >
-                                <span> +{{ user.userRole.length - 2 }} </span>
+                                <span> +{{ user.userRole === undefined ? 
+                                plugRoles.length - 2 : user.userRole.length - 2 }} </span>
                             </v-list-item-title>
                         </v-list-item-content>
                     </v-col>
-                    <v-col cols="2" class="pa-0 pl-12 d-flex" align-self="center">
+                    <v-col cols="2" class="pa-0 d-flex" align-self="center">
                         <v-list-item-title>{{
-                            user.userCreater
+                            user.createdOn
                         }}</v-list-item-title>
                         <DotsSettings></DotsSettings>
                     </v-col>
@@ -147,6 +153,10 @@ export default {
     },
     mixins: [formattingUserInfo],
     data: () => ({
+        plugRoles: [
+            {id: 1, name: 'null'},
+            {id: 2, name: 'null'},
+        ],
         userSettingsWindow: [
             {
                 icon: "mdi-square-edit-outline",
@@ -175,9 +185,13 @@ export default {
             },
         ],
     }),
-    computed: {
+    methods: {
         filtredUsersList() {
+            setTimeout(() => {
+                this.$forceUpdate()
+            }, 10)
             let usersList = this.$store.getters.getAllUsers;
+
             if (this.filterValue) {
                 return usersList.filter((item) => {
                     return this.filterValue
@@ -185,8 +199,8 @@ export default {
                         .split(" ")
                         .every((v) => 
                         item.email.toLowerCase().includes(v) ||
-                        item.firstname.toLowerCase().includes(v) || 
-                        item.surname.toLowerCase().includes(v)
+                        item.firstName.toLowerCase().includes(v) || 
+                        item.lastName.toLowerCase().includes(v)
                         );
                 });
             } else 

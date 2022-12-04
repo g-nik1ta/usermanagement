@@ -3,7 +3,7 @@
         <v-list-item
             class="py-2 pl-6 pr-0"
             :style="{ borderBottom: '1px solid #f0f0f0' }"
-            v-for="(user, index) in filtredUsersList"
+            v-for="(user, index) in filtredUsersList()"
             :key="index"
             @click="
                 $router.push({
@@ -22,7 +22,13 @@
                             text-uppercase
                         "
                     >
-                        {{ AddUserAvatar(user.firstname, user.surname, user.email) }}
+                        {{
+                            AddUserAvatar(
+                                user.firstName,
+                                user.lastName,
+                                user.email
+                            )
+                        }}
                     </span>
                 </v-avatar>
             </v-list-item-avatar>
@@ -32,17 +38,23 @@
                 bordered
                 dot
                 inline
-                :color="user.isActive ? '#2CA5B4' : '#D16A42'"
+                :color="user.enabled ? '#2CA5B4' : '#D16A42'"
             ></v-badge>
 
             <v-list-item-content>
                 <v-list-item-subtitle
                     class="text-subtitle-1 font-weight-black black--text"
                 >
-                    {{ getFullName(user.firstname, user.surname, user.email) }}
+                    {{ getFullName(user.firstName, user.lastName, user.email) }}
                 </v-list-item-subtitle>
                 <v-list-item-title>
-                    {{ user.userRole[0].name }}
+                    {{
+                        user.userRole === undefined
+                            ? "null"
+                            : user.userRole[0].name === null
+                            ? "null"
+                            : user.userRole[0].name
+                    }}
                 </v-list-item-title>
             </v-list-item-content>
             <DotsSettings></DotsSettings>
@@ -63,19 +75,24 @@ export default {
         },
     },
     mixins: [formattingUserInfo],
-    computed: {
+    methods: {
         filtredUsersList() {
+            setTimeout(() => {
+                this.$forceUpdate()
+            }, 10)
             let usersList = this.$store.getters.getAllUsers;
+
             if (this.filterValue) {
                 return usersList.filter((item) => {
                     return this.filterValue
                         .toLowerCase()
                         .split(" ")
-                        .every((v) => 
-                        item.email.toLowerCase().includes(v) ||
-                        item.firstname.toLowerCase().includes(v) || 
-                        item.surname.toLowerCase().includes(v) || 
-                        item.userRole[0].name.toLowerCase().split(" ").join("").includes(v)
+                        .every(
+                            (v) =>
+                                item.email.toLowerCase().includes(v) ||
+                                item.firstName.toLowerCase().includes(v) ||
+                                item.lastName.toLowerCase().includes(v) || 
+                                (item.userRole[0].name === null ? 'null'.includes(v) : item.userRole[0].name.toLowerCase().split(" ").join("").includes(v))
                         );
                 });
             } else {

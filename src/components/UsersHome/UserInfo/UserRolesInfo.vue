@@ -39,7 +39,7 @@
                             class="font-weight-bold text-subtitle-1 black--text"
                             :style="{ color: '#9E9E9E' }"
                         >
-                            {{ userRole.name }}
+                            {{ userRole.name === null ? 'null' : userRole.name }}
                         </v-list-item-title>
                     </v-list-item-group>
                 </v-col>
@@ -105,15 +105,37 @@
 export default {
     name: "UserRolesInfo",
     data: () => ({
-        user: {},
+        user: {
+            createdOn: '',
+            email: '',
+            enabled: '',
+            firstName: '',
+            id: '',
+            lastName: '',
+            userName: '',
+        },
     }),
-    created() {
-        this.user = this.$store.getters.getAllUsers[this.$route.params.id - 1];
+    beforeCreate() {
+        setTimeout(() => {
+            const allUser = this.$store.getters.getAllUsers;
+
+            for (let i = 0; i < allUser.length; i++) {
+                if (allUser[i].id == this.$route.params.id) {
+                    this.user = allUser[i];
+                    break;
+                }
+            }
+        }, 1000);
     },
     watch: {
         async $route() {
-            this.user =
-                this.$store.getters.getAllUsers[this.$route.params.id - 1];
+            const allUser = this.$store.getters.getAllUsers;
+            for (let i = 0; i < allUser.length; i++) {
+                if (allUser[i].id == this.$route.params.id) {
+                    this.user = allUser[i];
+                    break;
+                }
+            }
         },
     }, 
 };
