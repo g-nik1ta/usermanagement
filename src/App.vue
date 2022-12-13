@@ -38,6 +38,7 @@ export default Vue.extend({
             }
         );
         this.$store.dispatch("getUsers");
+        this.$store.dispatch("getCurrentUser");
     },
     watch: {
         $route() {

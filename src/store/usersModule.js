@@ -123,6 +123,11 @@ export default {
         //     },
         // ],
         users: [],
+        currentUser: {
+            firstName: "",
+            lastName: "",
+            email: "",
+        },
         roles: [
             {
                 id: 11,
@@ -189,8 +194,12 @@ export default {
                     ]
                 }, { information: userInfo[i].description })
             }
-            // console.log(state.users)
-        }
+        },
+        SET_CURRENT_USER(state, currentUser) {
+            state.currentUser.firstName = currentUser.firstName;
+            state.currentUser.lastName = currentUser.lastName;
+            state.currentUser.email = currentUser.email;
+        },
     },
     getters: {
         getAllUsers(state) {
@@ -198,6 +207,9 @@ export default {
         },
         getAllRoles(state) {
             return state.roles;
+        },
+        getCurrentUser(state) {
+            return state.currentUser;
         },
     },
     actions: {
@@ -216,6 +228,17 @@ export default {
                     })
             } catch (error) {
                 console.error(error)
+            }
+        },
+        getCurrentUser({ commit }) {
+            try {
+                axios
+                    .get("http://rdp.nks.com.ua:55002/api/users/current-user")
+                    .then((response) => {
+                        commit('SET_CURRENT_USER', response.data)
+                    });
+            } catch (error) {
+                console.log(error)
             }
         }
     }

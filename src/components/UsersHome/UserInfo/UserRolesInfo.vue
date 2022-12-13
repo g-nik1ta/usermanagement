@@ -118,24 +118,27 @@ export default {
     beforeCreate() {
         setTimeout(() => {
             const allUser = this.$store.getters.getAllUsers;
+            const routeId = this.$route.params.id;
 
-            for (let i = 0; i < allUser.length; i++) {
-                if (allUser[i].id == this.$route.params.id) {
-                    this.user = allUser[i];
-                    break;
+            this.user = allUser.find(function (elem) {
+                if (elem.id == routeId) {
+                    return elem;
                 }
-            }
+                return false
+            })
         }, 1000);
     },
     watch: {
         async $route() {
             const allUser = this.$store.getters.getAllUsers;
-            for (let i = 0; i < allUser.length; i++) {
-                if (allUser[i].id == this.$route.params.id) {
-                    this.user = allUser[i];
-                    break;
+            const routeId = this.$route.params.id;
+
+            this.user = allUser.find(function (elem) {
+                if (elem.id == routeId) {
+                    return elem;
                 }
-            }
+                return false
+            })
         },
     }, 
 };

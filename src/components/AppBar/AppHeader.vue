@@ -34,7 +34,7 @@
                             elevation="1"
                         >
                             <span class="teal--text text-h6 font-weight-medium">
-                                {{ AddUserAvatar(user.firstName, user.lastName, user.email) }}</span
+                                {{ AddUserAvatar(currentUser.firstName, currentUser.lastName, currentUser.email) }}</span
                             >
                         </v-btn>
                     </template>
@@ -50,7 +50,7 @@
                                                 text-h5 text-center
                                                 font-weight-regular
                                             "
-                                            >{{AddUserAvatar(user.firstName, user.lastName, user.email)}}</span
+                                            >{{AddUserAvatar(currentUser.firstName, currentUser.lastName, currentUser.email)}}</span
                                         >
                                     </v-avatar>
                                 </v-list-item-avatar>
@@ -58,11 +58,11 @@
                                 <v-list-item-content>
                                     <v-list-item-title
                                         class="font-weight-medium"
-                                        >{{getFullName(user.lastName, user.firstName, user.email)}}</v-list-item-title
+                                        >{{getFullName(currentUser.lastName, currentUser.firstName, currentUser.email)}}</v-list-item-title
                                     >
                                     <v-list-item-subtitle
                                         class="font-weight-regular"
-                                        >{{user.email}}</v-list-item-subtitle
+                                        >{{currentUser.email}}</v-list-item-subtitle
                                     >
                                 </v-list-item-content>
                             </v-list-item>
@@ -96,7 +96,6 @@
 
 <script>
 import Vue from "vue";
-import axios from "axios";
 import formattingUserInfo from "@/mixins/formattingUserInfo";
 
 export default {
@@ -104,24 +103,20 @@ export default {
     mixins: [formattingUserInfo],
     data: () => ({
         menu: false,
-        user: {
+        currentUser: {
             firstName: "",
             lastName: "",
             email: "",
         },
     }),
-    beforeCreate() {
-        axios
-            .get("http://rdp.nks.com.ua:55002/api/users/current-user")
-            .then((response) => {
-                this.user.firstName = response.data.firstName;
-                this.user.lastName = response.data.lastName;
-                this.user.email = response.data.email;
-            });
+    created() {
+        const currentUser = this.$store.getters.getCurrentUser;
+        this.currentUser = currentUser
     },
     methods: {
         logOut() {
-            let logoutOptions = { redirectUri: "http://localhost:8080/" };
+            let logoutOptions = { redirectUri: "https://g-nik1ta.github.io/usermanagement/" };
+            // let logoutOptions = { redirectUri: "http://localhost:8080/" };
             Vue.$keycloak
                 .logout(logoutOptions)
                 .then((success) => {

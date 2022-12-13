@@ -299,33 +299,29 @@ export default {
     computed: {
         emailErrors() {
             const errors = [];
-            if (!this.$v.form.email.$dirty) return errors;
-            !this.$v.form.email.email && errors.push("Must be valid e-mail");
-            !this.$v.form.email.required && errors.push("E-mail is required");
+            if(!this.$v.form.email.$dirty) return errors;
+            if(!this.$v.form.email.email) errors.push("Must be valid e-mail");
+            if(!this.$v.form.email.required) errors.push("E-mail is required");
             return errors;
         },
         selectErrors() {
             const errors = [];
-            if (!this.$v.form.select.$dirty) return errors;
-            !this.$v.form.select.required && errors.push("Item is required");
+            if(!this.$v.form.select.$dirty) return errors;
+            if(!this.$v.form.select.required) errors.push("Item is required");
             return errors;
         },
         passwordErrors() {
             const errors = [];
-            if (!this.$v.form.password.$dirty) return errors;
-            !this.$v.form.password.minLength &&
-                errors.push("Password must be at least 4 characters long");
-            !this.$v.form.password.required &&
-                errors.push("Password is required");
+            if(!this.$v.form.password.$dirty) return errors;
+            if(!this.$v.form.password.minLength) errors.push("Password must be at least 4 characters long");
+            if(!this.$v.form.password.required) errors.push("Password is required");
             return errors;
         },
         confirmPasswordErrors() {
             const errors = [];
-            if (!this.$v.form.confirmPassword.$dirty) return errors;
-            !this.$v.form.confirmPassword.sameAsPassword &&
-                errors.push("Passwords must be identical");
-            !this.$v.form.confirmPassword.required &&
-                errors.push("Password is required");
+            if(!this.$v.form.confirmPassword.$dirty) return errors;
+            if(!this.$v.form.confirmPassword.sameAsPassword) errors.push("Passwords must be identical");
+            if(!this.$v.form.confirmPassword.required) errors.push("Password is required");
             return errors;
         },
         sortSelection() {
@@ -348,30 +344,30 @@ export default {
                 if (element.id < 100) {
                     if (i + 1 === this.selection.length) {
                         userRole.push(
-                            new Object({
+                            {
                                 id: element.id,
                                 name: element.name,
                                 systemsAplications: element.name,
-                            })
+                            }
                         );
                     } else {
                         for (let j = i; j < this.selection.length; j++) {
                             const nextElement = this.selection[i + 1];
                             if (element.id === String(nextElement.id).slice(0, 2)) {
                                 userRole.push(
-                                    new Object({
+                                    {
                                         id: nextElement.id,
                                         name: element.name,
                                         systemsAplications: nextElement.name,
-                                    })
+                                    }
                                 );
                             } else {
                                 userRole.push(
-                                    new Object({
+                                    {
                                         id: element.id,
                                         name: element.name,
                                         systemsAplications: element.name,
-                                    })
+                                    }
                                 );
                                 break;
                             }
@@ -379,19 +375,19 @@ export default {
                     }
                 } else {
                     let nameID = null;
-                    for(let j = 0; j < this.rolesItems.length; j++) {
-                    const el = this.rolesItems[j];
-                        if (String(element.id).slice(0, 2) === String(el.id)) {
-                            nameID = j;
-                            break;
+                    
+                    nameID = this.rolesItems.findIndex(function (elem) {
+                        if (String(element.id).slice(0, 2) === String(elem.id)) {
+                            return elem;
                         }
-                    }
+                        return false
+                    })
                     userRole.push(
-                        new Object({
+                        {
                             id: element.id,
                             name: element.name,
                             systemsAplications: this.rolesItems[nameID].name,
-                        })
+                        }
                     );
                 }
             }
